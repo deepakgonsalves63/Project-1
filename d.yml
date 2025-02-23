@@ -1,0 +1,18 @@
+apiVer: apps/v1
+kind: Deployment
+metatdata:
+  name: dpnt
+spec:
+  replicas: 3
+  Selector:
+    matchLabels:
+      ng: web
+templates:
+  metadata:
+    name: pd
+  spec:
+    containers:
+      - name: c1
+      image: deepakgonsalves63/ckm
+    nodeSelector:
+      ns: s1
