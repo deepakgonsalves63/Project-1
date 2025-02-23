@@ -4,7 +4,8 @@ metadata:
   name: svc1
 spec:
   ports:
-    port: 80
-    targetPort: 80
+    - port: 80
+      targetPort: 80
   Selector:
-    
+    ns: s1
+  type: nodePort 
