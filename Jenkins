@@ -1,29 +1,39 @@
-pipeline 
-Agent any {
-stages {
-  satge ("Docker Image Build"){
-      steps {
-        echo "Docker image Build"
-        sh "docker build -t ckm ."
-        sh "docker tag ckm deepakgonsalves63/ckm"
+pipeline {
+  Agent any {
+    stages {
+      satge ("Clone from Git") {
+        steps {
+          echo "Clone from Git"
+          git url: "https://github.com/deepakgonsalves63/Project-1.git", branch: "main"
+        }
       }
-  }
-  stages ("Push Docker image") {
-    steps {
-      echo "Push deepakgonsalves63/ckm"
-      sh "docker login"
-      sh "docker push deepakgonsalves63/ckm"
-    }
-  }
-  stages ("K8s") {
-    steps {
-      echo "Deploy deepakgonsalves63/ckm using K8s "
-      sh "kubectl apply -f d.yml"
-      sh "kubectl apply -f s.yml"
+      satge ("Docker Image Build") {
+        steps {
+          echo "Docker image Build"
+          sh "docker build -t ckm ."
+          sh "docker tag ckm deepakgonsalves63/ckm"
+        }
+      }
+      stages ("Push Docker image") {
+        steps {
+          echo "Pushing the image to docker hub"
+          withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
+          sh "docker tag ckm ${env.dockerHubUser}/ckm"
+          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+          sh "docker push ${env.dockerHubUser}/ckm"
+        }
+      }
+      stages ("K8s") {
+        steps {
+          echo "Deploy deepakgonsalves63/ckm using K8s "
+          sh "kubectl apply -f d.yml"
+          sh "kubectl apply -f s.yml"
+        }
+      }
     }
   }
 }
-}
+
     
 
       
