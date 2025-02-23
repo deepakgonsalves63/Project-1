@@ -1,4 +1,4 @@
-apiVer: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metatdata:
   name: dpnt
@@ -7,12 +7,16 @@ spec:
   Selector:
     matchLabels:
       ng: web
-templates:
-  metadata:
-    name: pd
-  spec:
-    containers:
-      - name: c1
-      image: deepakgonsalves63/ckm
+  template:
+    metadata:
+      name: pd
+      labels:
+        ng: web
+    spec:
+      containers:
+        - name: c1
+          image: deepakgonsalves63/ckm
+          ports:
+            - containerPort: 80
     nodeSelector:
       ns: s1
