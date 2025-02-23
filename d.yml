@@ -18,5 +18,5 @@ spec:
           image: deepakgonsalves63/ckm
           ports:
             - containerPort: 80
-    nodeSelector:
-      ns: s1
+      nodeSelector:
+        ns: s1
