@@ -10,7 +10,7 @@ pipeline {
       satge ("Docker Image Build") {
         steps {
           echo "Docker image Build"
-          sh "docker build -t ckm ."
+          sh "docker build -t ckm -f Project-1/Dockerfile ."
           sh "docker tag ckm deepakgonsalves63/ckm"
         }
       }
