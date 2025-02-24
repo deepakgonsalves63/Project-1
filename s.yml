@@ -6,6 +6,6 @@ spec:
   ports:
     - port: 80
       targetPort: 80
-  Selector:
-    ns: s1
-  type: nodePort 
+  selector:
+    ng: web
+  type: NodePort 
